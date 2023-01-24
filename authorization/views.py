@@ -1,3 +1,14 @@
 from django.shortcuts import render
+from authorization import models
 
-# Create your views here.
+
+def signup():
+    pass
+
+
+def login():
+    pass
+
+
+def logout():
+    pass
