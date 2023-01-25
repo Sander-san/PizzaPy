@@ -14,7 +14,7 @@
     <title>{% block title %}{% endblock %}</title>
 </head>
 <body>
-    <div>
+    <div class="header">
         <nav class="navbar navbar-default navigation-clean-button">
             <div class="container">
                 <div class="navbar-header"><a class="navbar-brand" href="#"><img src="../static/media/logo.png" style="width:36px">PizzaPy</a>
@@ -26,9 +26,9 @@
                 </div>
                 <div class="collapse navbar-collapse" id="navcol-1">
                     <ul class="nav navbar-nav">
-                        <li role="presentation"><a href="#">Pizza</a></li>
-                        <li role="presentation"><a href="#">Cakes</a></li>
-                        <li role="presentation"><a href="#">Drinks</a></li>
+                        <li role="presentation"><a href="#pizza">Pizza</a></li>
+                        <li role="presentation"><a href="#cake">Cakes</a></li>
+                        <li role="presentation"><a href="#drink">Drinks</a></li>
                         <li role="presentation"><a href="#">Delivery</a></li>
 <!--                        <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false" href="#">Menu <span class="caret"></span></a>-->
 <!--                            <ul class="dropdown-menu" role="menu">-->
@@ -49,10 +49,21 @@
         </nav>
     </div>
 
-    <img src="{% static 'media/cake.jpg' %}">
-
+    <hr>
     {% block content %}
     {% endblock %}
+
+    <footer>
+        <div class="container">
+            <hr>
+            <div class="row">
+                <p class="col-md-3 col-sm-12">Privacy policy</p>
+                <p class="col-md-3 col-sm-12">Terms and conditions</p>
+                <p class="col-md-3 col-sm-12">Allergen information</p>
+                <p class="col-md-3 col-sm-12">Contact</p>
+            </div>
+        </div>
+    </footer>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>

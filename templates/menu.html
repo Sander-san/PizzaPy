@@ -1,3 +1,76 @@
 {% extends 'base.html' %}
 {% block content %}
+{% load static %}
+<div class="container">
+    <div class="row offerings">
+        <div class="col-md-4 offerings_info">
+            <h2>45 minutes or free pizza</h2>
+            <p>if we don't deliver the order in 45 minutes you will
+                get one pizza from the order for free</p>
+        </div>
+        <div class="col-md-4 offerings_logo">
+            <h2>PizzaPy</h2>
+            <img src="{% static 'media/pizza_piece.png' %}" alt="PizzaPy" style="width:120px">
+        </div>
+        <div class="col-md-4 offerings_number">
+            <p>a1 life mts</p>
+            <h2>755-66-55</h2>
+            <p>Monday through Thursday 10:00-03:00</p>
+            <p>Friday* through Sunday around the clock</p>
+        </div>
+    </div>
+
+    <hr>
+
+    <div class="menu">
+        <div class="row menu_pizza" id="pizza">
+            <h2 style="color:#FF7F50">Pizza</h2>
+            {% for p in pizza %}
+                <div class="col-md-4 col-sm-12 menu_item">
+                    <img src="{{p.image.url}}" alt="">
+                    <h2>{{p.title}}</h2>
+                    <div>
+                        <h3>{{p.price}} $</h3>
+                        <a href="#" class="btn btn-warning">add to order</a>
+                    </div>
+                    <p>Size -{{p.regular_size}} kilo</p>
+                    <p>{{p.description}}</p>
+                </div>
+            {% endfor %}
+        </div>
+        <hr>
+        <div class="row menu_cakes" id="cake">
+            <h2 style="color:#FF7F50">Cakes</h2>
+            {% for c in cake %}
+                <div class="col-md-4 col-sm-12 menu_item">
+                    <img src="{{c.image.url}}" alt="">
+                    <h2>{{c.title}}</h2>
+                    <div>
+                        <h3>{{c.price}} $</h3>
+                        <a href="#" class="btn btn-warning">add to order</a>
+                    </div>
+                    <p>Size - {{c.regular_size}} gram</p>
+                </div>
+            {% endfor %}
+        </div>
+        <hr>
+        <div class="row menu_drinks" id="drink">
+            <h2 style="color:#FF7F50">Drinks</h2>
+            {% for d in drink %}
+                <div class="col-md-4 col-sm-12 menu_item">
+                    <img src="{{d.image.url}}" alt="">
+                    <h2>{{d.title}}</h2>
+                    <div>
+                        <h3>{{d.price}} $</h3>
+                        <a href="#" class="btn btn-warning">add to order</a>
+                    </div>
+                    <p>Size -{{d.regular_size}} l</p>
+                    <p></p>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+
+
+</div>
 {% endblock %}
