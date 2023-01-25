@@ -1,14 +1,13 @@
-from django.shortcuts import render
-from authorization import models
+from django.shortcuts import render, redirect
 
 
-def signup():
+def signup(request):
     pass
 
 
-def login():
+def login(request):
     pass
 
 
-def logout():
+def logout(request):
     pass

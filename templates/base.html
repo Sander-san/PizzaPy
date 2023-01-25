@@ -17,7 +17,8 @@
     <div class="header">
         <nav class="navbar navbar-default navigation-clean-button">
             <div class="container">
-                <div class="navbar-header"><a class="navbar-brand" href="#"><img src="../static/media/logo.png" style="width:36px">PizzaPy</a>
+                <div class="navbar-header"><a class="navbar-brand" href="{% url 'index' %}">
+                    <img src="../static/media/logo.png" style="width:36px">PizzaPy</a>
                     <button class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navcol-1">
                         <span class="sr-only">Toggle navigation</span>
                         <span class="icon-bar"></span><span class="icon-bar"></span>
@@ -30,19 +31,17 @@
                         <li role="presentation"><a href="#cake">Cakes</a></li>
                         <li role="presentation"><a href="#drink">Drinks</a></li>
                         <li role="presentation"><a href="#">Delivery</a></li>
-<!--                        <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false" href="#">Menu <span class="caret"></span></a>-->
-<!--                            <ul class="dropdown-menu" role="menu">-->
-<!--                                <li role="presentation"><a href="#">Pizza</a></li>-->
-<!--                                <li role="presentation"><a href="#">Second Item</a></li>-->
-<!--                                <li role="presentation"><a href="#">Third Item</a></li>-->
-<!--                            </ul>-->
-<!--                        </li>-->
                     </ul>
                     <p class="navbar-text navbar-right actions">
-<!--                        if not user-->
-                        <a class="navbar-link login" href="#">Log In</a>
-                        <a class="btn btn-default action-button" role="button" href="#">Sign Up</a>
-<!--                        if user-->
+                        {% if user.is_authenticated %}
+                        <a class="navbar-link login" href="#">
+                            Order <img src="{% static 'media/basket.svg' %}" style="width:14px">
+                        </a>
+                        <a class="btn btn-default action-button" role="button" href="#">Log Out</a>
+                        {% else %}
+                        <a class="navbar-link login" href="{% url 'login' %}">Log In</a>
+                        <a class="btn btn-default action-button" role="button" href="{% url 'signup' %}">Sign Up</a>
+                        {% endif %}
                     </p>
                 </div>
             </div>
