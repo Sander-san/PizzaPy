@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from menu.models import FoodCategory, FoodObject
+from menu.models import FoodObject
 
 
 def index(request):
@@ -14,3 +14,9 @@ def index(request):
     return render(request, 'menu.html', context)
 
 
+def delivery_info(request):
+    return render(request, 'delivery_info.html')
+
+
+def sorry(request):
+    return render(request, 'sorry.html')

@@ -1,7 +1,9 @@
 from django.urls import path
-from menu import views
+from menu.views import index, sorry, delivery_info
 
 
 urlpatterns = [
-    path('', views.index, name='index'),
+    path('', index, name='index'),
+    path('delivery_info/', delivery_info, name='delivery_info'),
+    path('sorry/', sorry, name='sorry'),
 ]

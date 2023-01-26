@@ -1,5 +1,5 @@
 from pathlib import Path
-from instance.config import main_secret_key, db_user, db_name, db_password
+from instance.config import main_secret_key, db_user, db_name, db_password, captcha_key_private, captcha_key_public
 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -29,6 +29,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'authorization',
+    'captcha',
     'menu',
     'order',
 ]
@@ -119,3 +120,8 @@ STATICFILES_DIRS = [BASE_DIR / 'static']
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+RECAPTCHA_PUBLIC_KEY = captcha_key_public
+RECAPTCHA_PRIVATE_KEY = captcha_key_private
+
+RECAPTCHA_REQUIRED_SCORE = 0.85

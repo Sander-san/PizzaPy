@@ -14,7 +14,8 @@
                     <p>Positions in order: {{pos_count}}</p>
                     <b>Total sum: {{total_price}} $</b>
                     <p><br></p>
-                    <p><a href="#" class="btn btn-warning">Finish order</a>
+                    <p><a href="{% url 'take_away' %}" class="btn btn-success">Take away</a>
+                        <a href="{% url 'delivery' %}" class="btn btn-warning">Delivery</a>
                     <a href="{% url 'remove_from_basket' %}" class="btn btn-danger">Decline</a></p>
                 </div>
             </div>

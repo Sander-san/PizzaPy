@@ -30,7 +30,7 @@
                         <li role="presentation"><a href="#pizza">Pizza</a></li>
                         <li role="presentation"><a href="#cake">Cakes</a></li>
                         <li role="presentation"><a href="#drink">Drinks</a></li>
-                        <li role="presentation"><a href="#">Delivery</a></li>
+                        <li role="presentation"><a href="{% url 'delivery_info' %}">Delivery info</a></li>
                     </ul>
                     <p class="navbar-text navbar-right actions">
                         {% if user.is_authenticated %}

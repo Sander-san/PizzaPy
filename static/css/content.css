@@ -30,11 +30,29 @@ footer{
     text-align: center;
     margin: auto;
     padding: 60px 10px;
-    padding-bottom: 200px;
+    padding-bottom: 150px;
 }
 .empty_basket img{
     width: 400px;
 }
 .order_item{
     text-align: center;
+    padding: 60px 10px;
+    padding-bottom: 140px;
+}
+.sorry{
+    text-align: center;
+    margin: auto;
+    padding: 80px 10px;
+    padding-bottom: 140px;
+}
+.sorry img{
+    width: 400px;
+}
+.delivery_info{
+    text-align: center;
+    padding-bottom: 40px;
+}
+.delivery_info .map img{
+    width: 400px;
 }
