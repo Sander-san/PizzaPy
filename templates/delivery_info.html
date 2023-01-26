@@ -11,16 +11,11 @@
         </div>
         <div class="col-sm-6 col-sm-12">
             <h3>Our restaurants</h3>
-            <p>20 Gazety Pravda Ave. 20 Gazety Pravda Ave</p>
-            <p style="color: grey">Monday to Friday 10:00-24:00 / Saturday - Sunday 00:00-24:00</p>
-            <p>Ul. 38a, Gorodetskaya St.</p>
-            <p style="color: grey">Monday to Friday 10:00-24:00 / Saturday - Sunday 00:00-24:00</p>
-            <p>150 V. Rokossovsky Ave. 150v Rokossovskogo St.</p>
-            <p style="color: grey">Monday to Friday 10:00-24:00 / Saturday - Sunday 00:00-24:00</p>
-            <p>17 Revolution St.</p>
-            <p style="color: grey">Monday to Friday 10:00-24:00 / Saturday - Sunday 00:00-24:00</p>
-            <p>77, Lobanka str. 77 Lobanka St.</p>
-            <p style="color: grey">Monday to Friday 10:00-24:00 / Saturday - Sunday 00:00-24:00</p>
+            <br>
+            {% for r in restaurant %}
+            <p>{{r.address}}</p>
+            <p style="color: grey">{{r.working_hours}}</p>
+            {% endfor %}
         </div>
         <div class="col-sm-6 col-sm-12 map">
             <img src="{% static 'media/map.png' %}">

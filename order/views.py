@@ -2,13 +2,13 @@ from django.shortcuts import render, redirect
 from menu.models import FoodObject
 from order.models import Basket
 from django.contrib.auth.decorators import login_required
+from order.forms import OrderDeliveryForm, OrderTakeAwayForm
 
 
 @login_required(login_url='/signup/')
 def add_to_basket(request, element_pk):
     element = FoodObject.objects.filter(id=element_pk)
     user_basket = Basket.objects.filter(user=request.user).first()
-    print(element.first())
     if user_basket:
         user_basket.food.add(element.first())
     else:
@@ -51,8 +51,14 @@ def remove_from_basket(request):
 @login_required(login_url='/signup/')
 def take_away(request):
     user_basket = Basket.objects.filter(user=request.user).first()
+    form = OrderTakeAwayForm()
+    if request.method == 'POST':
+        form = OrderTakeAwayForm(request.POST)
+        if form.is_valid():
+            print('yes')
     context = {
-        'user_basket': user_basket
+        'user_basket': user_basket,
+        'form': form,
     }
     return render(request, 'take_away.html', context)
 
@@ -60,15 +66,14 @@ def take_away(request):
 @login_required(login_url='/signup/')
 def delivery(request):
     user_basket = Basket.objects.filter(user=request.user).first()
-    if user_basket:
-        items = Basket.objects.get(user=request.user).food.all()
-        context = {
-            'user_basket': user_basket,
-            'items': items,
-        }
-        return render(request, 'delivery.html', context)
+    form = OrderDeliveryForm()
+    if request.method == 'POST':
+        form = OrderDeliveryForm(request.POST)
+        if form.is_valid():
+            print('yes')
     context = {
-        'user_basket': user_basket
+        'user_basket': user_basket,
+        'form': form,
     }
     return render(request, 'delivery.html', context)
 

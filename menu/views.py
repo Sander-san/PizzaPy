@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from menu.models import FoodObject
+from order.models import Restaurant
 
 
 def index(request):
@@ -15,7 +16,11 @@ def index(request):
 
 
 def delivery_info(request):
-    return render(request, 'delivery_info.html')
+    restaurant = Restaurant.objects.all()
+    context = {
+        'restaurant': restaurant,
+    }
+    return render(request, 'delivery_info.html', context)
 
 
 def sorry(request):
