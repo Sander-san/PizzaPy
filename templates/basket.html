@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+{% block title %}PizzaPy{% endblock %}
+{% block content %}
+{% load static %}
+
+{% if items %}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6 col-sm-12 order_item">
+                <h1>Order details</h1>
+                <div class="item_table">
+                    <p><br></p>
+                    <p>Customer: {{user_basket.user}}</p>
+                    <p>Positions in order: {{pos_count}}</p>
+                    <b>Total sum: {{total_price}} $</b>
+                    <p><br></p>
+                    <p><a href="#" class="btn btn-warning">Finish order</a></p>
+                </div>
+            </div>
+
+            <div class="col-md-6 col-sm-12 order_item">
+                <h1>Your order</h1>
+                {% for item in items%}
+                <div class="column">
+                    <img src="{{item.image.url}}" alt="" style="width:50px; height:50px">
+                    <b>{{item.title}}</b>
+                    <p class="count_field">Count
+                        <a href="" class="add_item">-</a>
+                        <a href="" class="remove_item">+</a>
+                    </p>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+{% else %}
+    <div class="empty_basket">
+        <img src="{% static 'media/basket.jpg' %}">
+        <h1>Empty basket</h1>
+    </div>
+{% endif %}
+{% endblock %}

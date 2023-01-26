@@ -19,4 +19,22 @@ footer{
     text-align: center;
     padding: 40px 10px;
 }
-
+.admin_panel{
+    text-align: center;
+    margin: auto;
+}
+.basket{
+    margin-bottom: 4px;
+}
+.empty_basket{
+    text-align: center;
+    margin: auto;
+    padding: 60px 10px;
+    padding-bottom: 200px;
+}
+.empty_basket img{
+    width: 400px;
+}
+.order_item{
+    text-align: center;
+}

@@ -34,8 +34,8 @@
                     </ul>
                     <p class="navbar-text navbar-right actions">
                         {% if user.is_authenticated %}
-                        <a class="navbar-link login" href="#">
-                            Order <img src="{% static 'media/basket.svg' %}" style="width:14px">
+                        <a class="navbar-link login" href="{% url 'basket' %}">
+                            {{user}} | Basket <img src="{% static 'media/basket.svg' %}" style="width:14px" class="basket">
                         </a>
                         <a class="btn btn-default action-button" role="button" href="{% url 'logout' %}">Log Out</a>
                         {% else %}
@@ -46,6 +46,11 @@
                 </div>
             </div>
         </nav>
+        {% if request.user.is_staff %}
+        <div class="admin_panel">
+            <a class="btn btn-danger" href='#'>Admin Panel</a>
+        </div>
+        {% endif %}
     </div>
 
     <hr>
