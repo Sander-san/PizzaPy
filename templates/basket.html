@@ -14,7 +14,8 @@
                     <p>Positions in order: {{pos_count}}</p>
                     <b>Total sum: {{total_price}} $</b>
                     <p><br></p>
-                    <p><a href="#" class="btn btn-warning">Finish order</a></p>
+                    <p><a href="#" class="btn btn-warning">Finish order</a>
+                    <a href="{% url 'remove_from_basket' %}" class="btn btn-danger">Decline</a></p>
                 </div>
             </div>
 
@@ -24,10 +25,7 @@
                 <div class="column">
                     <img src="{{item.image.url}}" alt="" style="width:50px; height:50px">
                     <b>{{item.title}}</b>
-                    <p class="count_field">Count
-                        <a href="" class="add_item">-</a>
-                        <a href="" class="remove_item">+</a>
-                    </p>
+                    <p>Size: {{item.regular_size}} | Price: {{item.price}}$</p>
                 </div>
                 {% endfor %}
             </div>

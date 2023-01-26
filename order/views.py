@@ -5,16 +5,15 @@ from order.models import Basket
 
 def add_to_basket(request, element_pk):
     element = FoodObject.objects.filter(id=element_pk)
-    if request.method == 'GET':
-        user_basket = Basket.objects.filter(user=request.user).first()
-        if user_basket:
-            pass
-        context = {
-            'element': element,
-        }
-        return render(request, 'basket.html', context)
+    user_basket = Basket.objects.filter(user=request.user).first()
+    print(element.first())
+    if user_basket:
+        user_basket.food.add(element.first())
     else:
-        return redirect('index')
+        new_basket = Basket(user=request.user)
+        new_basket.save()
+        new_basket.food.add(element.first())
+    return redirect('index')
 
 
 def basket(request):
@@ -40,4 +39,6 @@ def basket(request):
 
 
 def remove_from_basket(request):
+    order = Basket.objects.filter(user=request.user).first()
+    order.delete()
     return redirect('basket')

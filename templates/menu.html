@@ -32,7 +32,7 @@
                     <h2>{{p.title}}</h2>
                     <div>
                         <h3>{{p.price}} $</h3>
-                        <a href="#" class="btn btn-warning">add to order</a>
+                        <a href="{% url 'add_to_basket' element_pk=p.pk%}" class="btn btn-warning">add to order</a>
                     </div>
                     <p>Size -{{p.regular_size}} kilo</p>
                     <p>{{p.description}}</p>
@@ -48,7 +48,7 @@
                     <h2>{{c.title}}</h2>
                     <div>
                         <h3>{{c.price}} $</h3>
-                        <a href="#" class="btn btn-warning">add to order</a>
+                        <a href="{% url 'add_to_basket' element_pk=c.pk%}" class="btn btn-warning">add to order</a>
                     </div>
                     <p>Size - {{c.regular_size}} gram</p>
                 </div>
@@ -63,7 +63,7 @@
                     <h2>{{d.title}}</h2>
                     <div>
                         <h3>{{d.price}} $</h3>
-                        <a href="#" class="btn btn-warning">add to order</a>
+                        <a href="{% url 'add_to_basket' element_pk=d.pk%}" class="btn btn-warning">add to order</a>
                     </div>
                     <p>Size -{{d.regular_size}} l</p>
                     <p></p>
