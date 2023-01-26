@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% block title %}Sign up{% endblock %}
+{% block content %}
+{% load static %}
+<div class="container b_forms">
+  <div class="col-md-12 b_forms">
+    <h2>Registration</h2>
+    <form method="post" class="form-group">
+      {% csrf_token %}
+      {% for field in form %}
+        <p>
+          {{ field.label_tag }}<br>
+          {{ field }}<br>
+          {% if field.help_text %}
+            <small style="color: grey">{{ field.help_text }}</small>
+          {% endif %}
+          {% for error in field.errors %}
+            <p style="color: red">{{ error }}</p>
+          {% endfor %}
+        </p>
+      {% endfor %}
+      <button type="submit" class="btn btn-success">Sign up</button>
+    </form>
+  </div>
+</div>
+{% endblock %}

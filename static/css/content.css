@@ -11,4 +11,12 @@ footer{
 .menu img{
     width: 200px;
 }
+.a_forms{
+    text-align: center;
+    padding: 100px 10px;
+}
+.b_forms{
+    text-align: center;
+    padding: 40px 10px;
+}
 
