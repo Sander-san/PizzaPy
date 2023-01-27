@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 from menu.models import FoodObject
+import time
 
 
 class Basket(models.Model):
@@ -30,15 +31,21 @@ class OrderDelivery(models.Model):
         ('2', 'cash')
     ]
     payment = models.CharField(max_length=5, choices=PAYMENT_CHOICE)
+    expired = models.BooleanField(default=False)
+    STATUS_CHOICE = [
+        ('1', 'Pending'),
+        ('2', 'In process'),
+        ('3', 'Order complete'),
+        ('4', 'Courier picked up the order'),
+        ('5', 'Courier delivered the order'),
+    ]
+    status = models.CharField(max_length=64, choices=STATUS_CHOICE, default='Pending', auto_created=True)
 
-    # STATUS_CHOICE = [
-    #     ('1', 'in process'),
-    #     ('2', 'in preparation'),
-    #     ('3', 'ready'),
-    # ]
+    def update_status(self):
+        pass
 
     def __str__(self):
-        return f'{self.user} | {self.restaurant} | {self.order_time.strftime("%m/%d/%Y, %H:%M:%S")}'
+        return f'{self.user} | {self.address} | {self.order_time.strftime("%m/%d/%Y %H:%M")}'
 
     class Meta:
         verbose_name = 'Delivery'
@@ -55,19 +62,22 @@ class OrderTakeAway(models.Model):
         ('2', 'cash')
     ]
     payment = models.CharField(max_length=5, choices=PAYMENT_CHOICE)
+    expired = models.BooleanField(default=False)
+    STATUS_CHOICE = [
+        ('1', 'Pending'),
+        ('2', 'In process'),
+        ('3', 'Order complete'),
+    ]
+    status = models.CharField(max_length=20, choices=STATUS_CHOICE, default='Pending', auto_created=True)
 
-    # status2 = 'in process/ in preparation/ comes to you/ at place'
+    def update_status(self):
+        self.status = 'In process'
+        return self.status
 
     def __str__(self):
-        return f'{self.user} | {self.address} | {self.order_time}'
+        return f'{self.user} | {self.restaurant} | {self.order_time.strftime("%m/%d/%Y %H:%M")}'
 
     class Meta:
         verbose_name = 'Take away'
         verbose_name_plural = 'Take away'
-
-
-
-
-
-
 

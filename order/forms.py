@@ -16,7 +16,6 @@ class OrderTakeAwayForm(forms.Form):
     RESTAURANT_CHOICE = []
     for i in restaurants:
         RESTAURANT_CHOICE += (i.pk, i.address),
-    print(RESTAURANT_CHOICE)
     restaurant = forms.ChoiceField(choices=RESTAURANT_CHOICE)
     payment = forms.ChoiceField(choices=OrderTakeAway.PAYMENT_CHOICE)
 

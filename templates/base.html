@@ -48,7 +48,7 @@
         </nav>
         {% if request.user.is_staff %}
         <div class="admin_panel">
-            <a class="btn btn-danger" href='#'>Admin Panel</a>
+            <a class="btn btn-danger" href='{% url "admin:index" %}' target="_blank">Admin Panel</a>
         </div>
         {% endif %}
     </div>

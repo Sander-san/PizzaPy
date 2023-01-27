@@ -56,3 +56,37 @@ footer{
 .delivery_info .map img{
     width: 400px;
 }
+.spinner {
+    height: 50px;
+    width: 50px;
+    border-left: 3px solid #FF7F50;
+    border-bottom: 3px solid #FF7F50;
+    border-right: 3px solid #FF7F50;
+    border-top: 3px solid transparent;
+    border-radius: 50%;
+    animation: spinner 1s linear infinite;
+}
+
+@keyframes spinner {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.status{
+    text-align: center;
+    margin: auto;
+    padding: 80px 10px;
+    padding-bottom: 160px;
+}
+.status h2{
+    color: #FF7F50;
+}
+.status .spinner{
+    margin: auto;
+    margin-top: 20px;
+}

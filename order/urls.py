@@ -1,5 +1,5 @@
 from django.urls import path
-from order.views import basket, add_to_basket, remove_from_basket, delivery, take_away
+from order.views import basket, add_to_basket, remove_from_basket, delivery, take_away, order_status
 
 
 urlpatterns = [
@@ -8,4 +8,5 @@ urlpatterns = [
     path('remove_from_basket/', remove_from_basket, name='remove_from_basket'),
     path('delivery/', delivery, name='delivery'),
     path('take_away/', take_away, name='take_away'),
+    path('order_status/', order_status, name='order_status'),
 ]

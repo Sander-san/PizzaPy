@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from menu.models import FoodObject
-from order.models import Basket
+from order.models import Basket, OrderDelivery, OrderTakeAway, Restaurant
 from django.contrib.auth.decorators import login_required
 from order.forms import OrderDeliveryForm, OrderTakeAwayForm
 
@@ -20,6 +20,10 @@ def add_to_basket(request, element_pk):
 
 @login_required(login_url='/signup/')
 def basket(request):
+    delivery = OrderDelivery.objects.filter(user=request.user).filter(expired=False)
+    take_away = OrderTakeAway.objects.filter(user=request.user).filter(expired=False)
+    if delivery or take_away:
+        return redirect('order_status')
     user_basket = Basket.objects.filter(user=request.user).first()
     if user_basket:
         items = Basket.objects.get(user=request.user).food.all()
@@ -55,7 +59,15 @@ def take_away(request):
     if request.method == 'POST':
         form = OrderTakeAwayForm(request.POST)
         if form.is_valid():
-            print('yes')
+            restaurant = Restaurant.objects.filter(pk=form.data['restaurant'])
+            user_order = OrderTakeAway.objects.create(
+                user=request.user,
+                restaurant=restaurant.first(),
+                basket=user_basket,
+                payment=form.data['payment'],
+            )
+            user_order.save()
+            return order_status(request)
     context = {
         'user_basket': user_basket,
         'form': form,
@@ -70,7 +82,14 @@ def delivery(request):
     if request.method == 'POST':
         form = OrderDeliveryForm(request.POST)
         if form.is_valid():
-            print('yes')
+            user_order = OrderDelivery.objects.create(
+                user=request.user,
+                address=form.data['address'],
+                basket=user_basket,
+                payment=form.data['payment'],
+            )
+            user_order.save()
+            return order_status(request)
     context = {
         'user_basket': user_basket,
         'form': form,
@@ -78,3 +97,15 @@ def delivery(request):
     return render(request, 'delivery.html', context)
 
 
+@login_required(login_url='/signup/')
+def order_status(request):
+    delivery = OrderDelivery.objects.filter(user=request.user).filter(expired=False)
+    take_away = OrderTakeAway.objects.filter(user=request.user).filter(expired=False)
+    if delivery or take_away:
+        context = {
+            'delivery': delivery.first(),
+            'take_away': take_away.first(),
+        }
+        return render(request, 'status.html', context)
+    else:
+        return redirect('basket')
