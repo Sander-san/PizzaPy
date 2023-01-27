@@ -19,6 +19,7 @@ class FoodObject(models.Model):
     description = models.TextField(blank=True, null=True)
     price = models.FloatField()
     regular_size = models.FloatField('Size')
+    quantity = models.IntegerField(blank=True, null=True, default='1')
 
     def __str__(self):
         return f"{self.category} {self.title} - {self.price}"

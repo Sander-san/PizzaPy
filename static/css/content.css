@@ -90,3 +90,14 @@ footer{
     margin: auto;
     margin-top: 20px;
 }
+.quantity a{
+    color: white;
+    text-decoration: none;
+}
+.quantity a:hover{
+    color: white;
+    text-decoration: none;
+}
+.quantity_p{
+    background-color: #eee;
+}

@@ -27,6 +27,15 @@
                     <img src="{{item.image.url}}" alt="" style="width:50px; height:50px">
                     <b>{{item.title}}</b>
                     <p>Size: {{item.regular_size}} | Price: {{item.price}}$</p>
+                    <div class="btn-group quantity" role="group" aria-label="Basic outlined example">
+                        <button type="button" class="btn btn-primary">
+                            <a href="">-</a>
+                        </button>
+                        <p class="btn btn-secondary quantity_p">{{item.quantity}}</p>
+                        <button type="button" class="btn btn-primary">
+                            <a href="">+</a>
+                        </button>
+                    </div>
                 </div>
                 {% endfor %}
             </div>
