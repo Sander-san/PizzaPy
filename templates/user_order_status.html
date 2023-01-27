@@ -8,10 +8,22 @@
             <h1>Your order status</h1>
             {% if delivery %}
                 <h2>{{delivery.status}}</h2>
+                {% if ready_delivery %}
+                <br>
+                <a href="{% url 'received_order' %}" class="btn btn-success">I received order</a>
+                {% else %}
                 <div class="spinner"></div>
-            {% else %}
+                {% endif %}
+            {% endif %}
+
+            {% if take_away %}
                 <h2>{{take_away.status}}</h2>
+                {% if ready_take_away %}
+                <br>
+                <a href="{% url 'received_order' %}" class="btn btn-success">I received order</a>
+                {% else %}
                 <div class="spinner"></div>
+                {% endif %}
             {% endif %}
         </div>
     </div>

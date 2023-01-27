@@ -1,0 +1,78 @@
+{% extends 'base.html' %}
+{% block title %}PizzaPy{% endblock %}
+{% block content %}
+{% load static %}
+{% if request.user.is_staff %}
+<div class="container">
+    <div class="row">
+        <div class="col-sm-6 col-sm-12">
+            {% if orders_delivery %}
+                {% for order in orders_delivery %}
+                <table class="table">
+                    <h1 style="text-align: center;">Orders for Delivery</h1>
+                  <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">User</th>
+                        <th scope="col">Address</th>
+                        <th scope="col">Order time</th>
+                        <th scope="col">Status</th>
+                        <th scope="col">Change status</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                        <th scope="row">{{order.pk}}</th>
+                        <td>{{order.user}}</td>
+                        <td>{{order.address}}</td>
+                        <td>{{order.order_time}}</td>
+                        <td style="color: green;">{{order.status}}</td>
+                        <td><a href="{% url 'change_order_status' order_pk=order.pk %}" style="color: red;">
+                            Switcher</a></td>
+                    </tr>
+                  </tbody>
+                </table>
+                {% endfor %}
+            {% else %}
+            <h1 style="text-align: center;">Orders for Delivery</h1>
+            <h3 style="text-align: center;">No available orders</h3>
+            {% endif %}
+        </div>
+
+        <div class="col-sm-6 col-sm-12">
+            {% if orders_take_way %}
+                {% for order in orders_take_way %}
+                <table class="table">
+                    <h1 style="text-align: center;">Orders for Take Away</h1>
+                  <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">User</th>
+                        <th scope="col">Restaurant</th>
+                        <th scope="col">Order time</th>
+                        <th scope="col">Status</th>
+                        <th scope="col">Change status</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                        <th scope="row">{{order.pk}}</th>
+                        <td>{{order.user}}</td>
+                        <td>{{order.restaurant}}</td>
+                        <td>{{order.order_time}}</td>
+                        <td style="color: green;">{{order.status}}</td>
+                        <td><a href="{% url 'change_order_status' order_pk=order.pk %}" style="color: red;">
+                            Switcher</a></td>
+                    </tr>
+                  </tbody>
+                </table>
+                {% endfor %}
+            {% else %}
+            <h1 style="text-align: center;">Orders for Take Away</h1>
+            <h3 style="text-align: center;">No available orders</h3>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endif %}
+{% endblock %}

@@ -1,7 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
 from menu.models import FoodObject
-import time
 
 
 class Basket(models.Model):
@@ -42,7 +41,18 @@ class OrderDelivery(models.Model):
     status = models.CharField(max_length=64, choices=STATUS_CHOICE, default='Pending', auto_created=True)
 
     def update_status(self):
-        pass
+        if self.status == self.STATUS_CHOICE[0][1]:
+            self.status = self.STATUS_CHOICE[1][1]
+            self.save()
+        elif self.status == self.STATUS_CHOICE[1][1]:
+            self.status = self.STATUS_CHOICE[2][1]
+            self.save()
+        elif self.status == self.STATUS_CHOICE[2][1]:
+            self.status = self.STATUS_CHOICE[3][1]
+            self.save()
+        elif self.status == self.STATUS_CHOICE[3][1]:
+            self.status = self.STATUS_CHOICE[4][1]
+            self.save()
 
     def __str__(self):
         return f'{self.user} | {self.address} | {self.order_time.strftime("%m/%d/%Y %H:%M")}'
@@ -71,8 +81,12 @@ class OrderTakeAway(models.Model):
     status = models.CharField(max_length=20, choices=STATUS_CHOICE, default='Pending', auto_created=True)
 
     def update_status(self):
-        self.status = 'In process'
-        return self.status
+        if self.status == self.STATUS_CHOICE[0][1]:
+            self.status = self.STATUS_CHOICE[1][1]
+            self.save()
+        elif self.status == self.STATUS_CHOICE[1][1]:
+            self.status = self.STATUS_CHOICE[2][1]
+            self.save()
 
     def __str__(self):
         return f'{self.user} | {self.restaurant} | {self.order_time.strftime("%m/%d/%Y %H:%M")}'

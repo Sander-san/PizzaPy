@@ -27,11 +27,12 @@
         <div class="col-md-6 col-sm-12 order_item">
             <h1>Order details</h1>
             <div class="item_table">
-                <p><br></p>
-                <p>Customer: {{user_basket.user}}</p>
-                <p>Order: $</p>
-                <p>Delivery: $</p>
-                <b>Total sum: $</b>
+                <p>For orders over $20, shipping is free. Delivery costs {{delivery_price}}$.</p>
+                <hr>
+                {% for i in items %}
+                <p>{{i}}</p>
+                {% endfor %}
+                <b>Total sum: {{total_price}}$</b>
             </div>
         </div>
     </div>

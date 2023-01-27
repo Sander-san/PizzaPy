@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+{% block title %}PizzaPy{% endblock %}
+{% block content %}
+{% load static %}
+<div class="container">
+    <div class="sorry">
+        <h3>Thanks for your order!</h3>
+        <img src="{% static 'media/pizza_piece.png' %}">
+    </div>
+</div>
+{% endblock %}
