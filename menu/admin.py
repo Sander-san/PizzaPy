@@ -10,8 +10,8 @@ class FoodCategoryAdmin(admin.ModelAdmin):
 
 @admin.register(FoodObject)
 class FoodObjectAdmin(admin.ModelAdmin):
-    list_display = ['get_image', 'category', 'title', 'price', 'regular_size', 'quantity']
-    fields = ['category', ('image', 'get_image'), 'title', 'description', 'price', 'regular_size', 'quantity']
+    list_display = ['get_image', 'category', 'title', 'price', 'regular_size', ]
+    fields = ['category', ('image', 'get_image'), 'title', 'description', 'price', 'regular_size', ]
     list_filter = ('category', 'price', 'regular_size')
     readonly_fields = ['get_image', ]
 

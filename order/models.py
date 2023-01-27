@@ -34,7 +34,7 @@ class OrderDelivery(models.Model):
     STATUS_CHOICE = [
         ('1', 'Pending'),
         ('2', 'In process'),
-        ('3', 'Order complete'),
+        ('3', 'Order complete, waiting for courier'),
         ('4', 'Courier picked up the order'),
         ('5', 'Courier delivered the order'),
     ]
@@ -95,3 +95,9 @@ class OrderTakeAway(models.Model):
         verbose_name = 'Take away'
         verbose_name_plural = 'Take away'
 
+
+"""
+user = models.ForeignKey(User, on_delete=models.CASCADE)
+    product = models.ForeignKey(Product, on_delete=models.CASCADE)
+    quantity = models.IntegerField()
+"""
