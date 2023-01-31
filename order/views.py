@@ -3,6 +3,7 @@ from menu.models import FoodObject
 from order.models import Basket, OrderDelivery, OrderTakeAway, Restaurant, BasketItem
 from django.contrib.auth.decorators import login_required
 from order.forms import OrderDeliveryForm, OrderTakeAwayForm
+from django.contrib.auth.models import User
 
 
 @login_required(login_url='/signup/')
@@ -211,3 +212,19 @@ def reduce_quantity(request, element_pk):
     else:
         return redirect('basket')
 
+
+@login_required(login_url='/signup/')
+def admin_order_detail(request, user_pk):
+    user_basket = Basket.objects.filter(user=user_pk).first()
+    user_orders = BasketItem.objects.filter(basket=user_basket)
+    total_sum = BasketItem.get_total_price(user_orders)
+    orders_delivery = OrderDelivery.objects.filter(user=user_pk, expired=False).first()
+    orders_take_way = OrderTakeAway.objects.filter(user=user_pk, expired=False).first()
+    context = {
+        'user_basket': user_basket,
+        'user_orders': user_orders,
+        'total_sum': total_sum,
+        'orders_delivery': orders_delivery,
+        'orders_take_way': orders_take_way,
+    }
+    return render(request, 'admin_order_detail.html', context)

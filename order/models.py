@@ -41,17 +41,17 @@ class OrderDelivery(models.Model):
     basket = models.OneToOneField(Basket, on_delete=models.SET_NULL, blank=True, null=True)
     order_time = models.DateTimeField(auto_now_add=True)
     PAYMENT_CHOICE = [
-        ('1', 'card'),
-        ('2', 'cash')
+        ('card', 'card'),
+        ('cash', 'cash')
     ]
     payment = models.CharField(max_length=5, choices=PAYMENT_CHOICE)
     expired = models.BooleanField(default=False)
     STATUS_CHOICE = [
-        ('1', 'Pending'),
-        ('2', 'In process'),
-        ('3', 'Order complete, waiting for courier'),
-        ('4', 'Courier picked up the order'),
-        ('5', 'Courier delivered the order'),
+        ('Pending', 'Pending'),
+        ('In process', 'In process'),
+        ('Order complete, waiting for courier', 'Order complete, waiting for courier'),
+        ('Courier picked up the order', 'Courier picked up the order'),
+        ('Courier delivered the order', 'Courier delivered the order'),
     ]
     status = models.CharField(max_length=64, choices=STATUS_CHOICE, default='Pending', auto_created=True)
 
@@ -83,15 +83,15 @@ class OrderTakeAway(models.Model):
     restaurant = models.ForeignKey(Restaurant, on_delete=models.CASCADE, blank=True, null=True)
     order_time = models.DateTimeField(auto_now_add=True)
     PAYMENT_CHOICE = [
-        ('1', 'card'),
-        ('2', 'cash')
+        ('card', 'card'),
+        ('cash', 'cash')
     ]
     payment = models.CharField(max_length=5, choices=PAYMENT_CHOICE)
     expired = models.BooleanField(default=False)
     STATUS_CHOICE = [
-        ('1', 'Pending'),
-        ('2', 'In process'),
-        ('3', 'Order complete'),
+        ('Pending', 'Pending'),
+        ('In process', 'In process'),
+        ('Order complete', 'Order complete'),
     ]
     status = models.CharField(max_length=20, choices=STATUS_CHOICE, default='Pending', auto_created=True)
 

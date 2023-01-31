@@ -16,18 +16,13 @@ class BasketAdmin(admin.ModelAdmin):
 
 @admin.register(OrderDelivery)
 class OrderDeliveryAdmin(admin.ModelAdmin):
-    list_display = ['user', 'address', 'order_time', 'expired', 'status']
+    list_display = ['user', 'address', 'order_time', 'expired', 'status', 'payment']
     list_filter = ('user', 'payment', 'expired', 'status')
-
-    def customer(self, obj):
-        return self.list_display[0]
-
-    customer.short_description = 'Customer'
 
 
 @admin.register(OrderTakeAway)
 class OrderTakeAwayAdmin(admin.ModelAdmin):
-    list_display = ['user', 'restaurant', 'order_time', 'expired', 'status']
+    list_display = ['user', 'restaurant', 'order_time', 'expired', 'status', 'payment']
     list_filter = ('user', 'payment', 'expired', 'status')
 
 

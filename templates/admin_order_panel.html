@@ -7,7 +7,6 @@
     <div class="row">
         <div class="col-sm-6 col-sm-12">
             {% if orders_delivery %}
-                {% for order in orders_delivery %}
                 <table class="table">
                     <h1 style="text-align: center;">Orders for Delivery</h1>
                   <thead>
@@ -21,18 +20,19 @@
                     </tr>
                   </thead>
                   <tbody>
+                  {% for order in orders_delivery %}
                     <tr>
                         <th scope="row">{{order.pk}}</th>
-                        <td>{{order.user}}</td>
+                        <td><a href="{% url 'admin_order_detail' user_pk=order.user.pk %}">{{order.user}}</a></td>
                         <td>{{order.address}}</td>
                         <td>{{order.order_time}}</td>
                         <td style="color: green;">{{order.status}}</td>
                         <td><a href="{% url 'change_order_status' order_pk=order.pk %}" style="color: red;">
                             Switcher</a></td>
                     </tr>
+                  {% endfor %}
                   </tbody>
                 </table>
-                {% endfor %}
             {% else %}
             <h1 style="text-align: center;">Orders for Delivery</h1>
             <h3 style="text-align: center;">No available orders</h3>
@@ -41,7 +41,6 @@
 
         <div class="col-sm-6 col-sm-12">
             {% if orders_take_way %}
-                {% for order in orders_take_way %}
                 <table class="table">
                     <h1 style="text-align: center;">Orders for Take Away</h1>
                   <thead>
@@ -55,18 +54,19 @@
                     </tr>
                   </thead>
                   <tbody>
+                    {% for order in orders_take_way %}
                     <tr>
                         <th scope="row">{{order.pk}}</th>
-                        <td>{{order.user}}</td>
+                        <td><a href="{% url 'admin_order_detail' user_pk=order.user.pk %}">{{order.user}}</a></td>
                         <td>{{order.restaurant}}</td>
                         <td>{{order.order_time}}</td>
                         <td style="color: green;">{{order.status}}</td>
                         <td><a href="{% url 'change_order_status' order_pk=order.pk %}" style="color: red;">
                             Switcher</a></td>
                     </tr>
+                    {% endfor %}
                   </tbody>
                 </table>
-                {% endfor %}
             {% else %}
             <h1 style="text-align: center;">Orders for Take Away</h1>
             <h3 style="text-align: center;">No available orders</h3>

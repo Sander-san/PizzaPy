@@ -1,6 +1,7 @@
 from django.urls import path
 from order.views import basket, add_to_basket, remove_from_basket, delivery, take_away, order_status, \
-    change_order_status, admin_orders_panel, received_order, expand_quantity, reduce_quantity
+    change_order_status, admin_orders_panel, received_order, expand_quantity, reduce_quantity, \
+    admin_order_detail
 
 
 urlpatterns = [
@@ -15,4 +16,5 @@ urlpatterns = [
     path('received_order/', received_order, name='received_order'),
     path('expand_quantity/<int:element_pk>', expand_quantity, name='expand_quantity'),
     path('reduce_quantity/<int:element_pk>', reduce_quantity, name='reduce_quantity'),
+    path('admin_order_detail/<int:user_pk>', admin_order_detail, name='admin_order_detail'),
 ]

@@ -1,0 +1,70 @@
+{% extends 'base.html' %}
+{% block title %}PizzaPy{% endblock %}
+{% block content %}
+{% load static %}
+{% if request.user.is_staff %}
+<div class="container">
+    <div class="row">
+        <div class="col-sm-12">
+            <table class="table">
+                <h1 style="text-align: center;">Order Details for {{items.user}}</h1>
+              <thead>
+                <tr>
+                    <th scope="col">Product</th>
+                    <th scope="col">Quantity</th>
+
+                    {% if orders_delivery %}
+                    <th scope="col">Address</th>
+                    <th scope="col">Order time</th>
+                    <th scope="col">Status</th>
+                    <th scope="col">Payment by</th>
+                    {% endif %}
+
+                    {% if orders_take_way %}
+                    <th scope="col">Restaurant</th>
+                    <th scope="col">Order time</th>
+                    <th scope="col">Status</th>
+                    <th scope="col">Payment by</th>
+                    {% endif %}
+
+                    <th scope="col">Payable</th>
+                </tr>
+              </thead>
+              <tbody>
+              {% for order in user_orders %}
+                <tr>
+                    <th scope="row"><img src="{{order.product.image.url}}" alt="" style="width:50px; height:50px">
+                        {{order.product.title}}</th>
+                    <td>{{order.quantity}}</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+              {% endfor %}
+                <tr>
+                    <th scope="row"></th>
+                    <td></td>
+                    {% if orders_delivery %}
+                    <td>{{orders_delivery.address}}</td>
+                    <td>{{orders_delivery.order_time}}</td>
+                    <td>{{orders_delivery.status}}</td>
+                    <td>{{orders_delivery.payment}}</td>
+                    {% endif %}
+                    {% if orders_take_way %}
+                    <td>{{orders_take_way.restaurant}}</td>
+                    <td>{{orders_take_way.order_time}}</td>
+                    <td>{{orders_take_way.status}}</td>
+                    <td>{{orders_take_way.payment}}</td>
+                    {% endif %}
+
+                    <td>{{total_sum}}$</td>
+                </tr>
+              </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endif %}
+{% endblock %}
