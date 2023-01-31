@@ -5,10 +5,25 @@ from menu.models import FoodObject
 
 class Basket(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True)
-    food = models.ManyToManyField(FoodObject, related_name='orders', blank=True)
+    created_date = models.DateTimeField(auto_now_add=True, blank=True, null=True)
 
     def __str__(self):
         return f'{self.user} basket'
+
+
+class BasketItem(models.Model):
+    basket = models.ForeignKey(Basket, on_delete=models.CASCADE)
+    product = models.ForeignKey(FoodObject, on_delete=models.CASCADE)
+    quantity = models.PositiveIntegerField(default=1)
+
+    def get_total_price(self):
+        res = 0
+        for i in self:
+            res += i.product.price * i.quantity
+        return round(res, 2)
+
+    def __str__(self):
+        return f'{self.basket} {self.product} {self.quantity}'
 
 
 class Restaurant(models.Model):
@@ -21,9 +36,9 @@ class Restaurant(models.Model):
 
 
 class OrderDelivery(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
     address = models.CharField(max_length=128, blank=True, null=True)
-    basket = models.OneToOneField(Basket, on_delete=models.PROTECT, blank=True, null=True)
+    basket = models.OneToOneField(Basket, on_delete=models.SET_NULL, blank=True, null=True)
     order_time = models.DateTimeField(auto_now_add=True)
     PAYMENT_CHOICE = [
         ('1', 'card'),
@@ -63,8 +78,8 @@ class OrderDelivery(models.Model):
 
 
 class OrderTakeAway(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
-    basket = models.OneToOneField(Basket, on_delete=models.PROTECT, blank=True, null=True)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    basket = models.OneToOneField(Basket, on_delete=models.SET_NULL, blank=True, null=True)
     restaurant = models.ForeignKey(Restaurant, on_delete=models.CASCADE, blank=True, null=True)
     order_time = models.DateTimeField(auto_now_add=True)
     PAYMENT_CHOICE = [
@@ -95,9 +110,3 @@ class OrderTakeAway(models.Model):
         verbose_name = 'Take away'
         verbose_name_plural = 'Take away'
 
-
-"""
-user = models.ForeignKey(User, on_delete=models.CASCADE)
-    product = models.ForeignKey(Product, on_delete=models.CASCADE)
-    quantity = models.IntegerField()
-"""

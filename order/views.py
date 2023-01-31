@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from menu.models import FoodObject
-from order.models import Basket, OrderDelivery, OrderTakeAway, Restaurant
+from order.models import Basket, OrderDelivery, OrderTakeAway, Restaurant, BasketItem
 from django.contrib.auth.decorators import login_required
 from order.forms import OrderDeliveryForm, OrderTakeAwayForm
 
@@ -11,14 +11,21 @@ def add_to_basket(request, element_pk):
     take_away = OrderTakeAway.objects.filter(user=request.user).filter(expired=False)
     if delivery or take_away:
         return redirect('basket')
-    element = FoodObject.objects.filter(id=element_pk)
+    element = FoodObject.objects.filter(id=element_pk).first()
     user_basket = Basket.objects.filter(user=request.user).first()
     if user_basket:
-        user_basket.food.add(element.first())
+        exist_order = BasketItem.objects.filter(basket=user_basket, product=element).first()
+        if exist_order:
+            exist_order.quantity += 1
+            exist_order.save()
+        else:
+            order = BasketItem.objects.create(basket=user_basket, product=element)
+            order.save()
     else:
-        new_basket = Basket(user=request.user)
+        new_basket = Basket.objects.create(user=request.user)
         new_basket.save()
-        new_basket.food.add(element.first())
+        order = BasketItem.objects.create(basket=new_basket, product=element)
+        order.save()
     return redirect('basket')
 
 
@@ -30,17 +37,14 @@ def basket(request):
         return redirect('order_status')
     user_basket = Basket.objects.filter(user=request.user).first()
     if user_basket:
-        items = Basket.objects.get(user=request.user).food.all()
-        pos_count = Basket.objects.get(user=request.user).food.all().count()
-        prices = Basket.objects.get(user=request.user).food.all()
-        total_price = 0
-        for i in prices:
-            total_price += i.price
+        user_orders = BasketItem.objects.filter(basket=user_basket)
+        pos_count = BasketItem.objects.filter(basket=user_basket).count()
+        total_sum = BasketItem.get_total_price(user_orders)
         context = {
             'user_basket': user_basket,
-            'items': items,
+            'user_orders': user_orders,
             'pos_count': pos_count,
-            'total_price': total_price,
+            'total_sum': total_sum,
         }
         return render(request, 'basket.html', context)
     context = {
@@ -60,11 +64,9 @@ def remove_from_basket(request):
 def take_away(request):
     user_basket = Basket.objects.filter(user=request.user).first()
     if user_basket:
-        items = Basket.objects.get(user=request.user).food.all()
-        prices = Basket.objects.get(user=request.user).food.all()
-        total_price = 0
-        for i in prices:
-            total_price += i.price
+        items = BasketItem.objects.filter(basket=user_basket)
+        pos_count = BasketItem.objects.filter(basket=user_basket).count()
+        total_sum = BasketItem.get_total_price(items)
 
         form = OrderTakeAwayForm()
         if request.method == 'POST':
@@ -83,7 +85,7 @@ def take_away(request):
             'user_basket': user_basket,
             'form': form,
             'items': items,
-            'total_price': total_price,
+            'total_sum': total_sum,
         }
         return render(request, 'take_away.html', context)
     else:
@@ -94,15 +96,11 @@ def take_away(request):
 def delivery(request):
     user_basket = Basket.objects.filter(user=request.user).first()
     if user_basket:
-        items = Basket.objects.get(user=request.user).food.all()
-        prices = Basket.objects.get(user=request.user).food.all()
-        total_price = 0
+        items = BasketItem.objects.filter(basket=user_basket)
+        total_sum = BasketItem.get_total_price(items)
         delivery_price = 4
-        for i in prices:
-            total_price += i.price
-        if total_price < 20:
-            total_price += delivery_price
-
+        if total_sum < 20:
+            total_sum += delivery_price
         form = OrderDeliveryForm()
         if request.method == 'POST':
             form = OrderDeliveryForm(request.POST)
@@ -120,7 +118,7 @@ def delivery(request):
             'form': form,
             'items': items,
             'delivery_price': delivery_price,
-            'total_price': total_price,
+            'total_sum': total_sum,
         }
         return render(request, 'delivery.html', context)
     else:
@@ -173,15 +171,43 @@ def change_order_status(request, order_pk):
 def received_order(request):
     user_basket = Basket.objects.filter(user=request.user).first()
     if user_basket:
-        user_order1 = OrderTakeAway.objects.filter(user=request.user).first()
-        user_order2 = OrderDelivery.objects.filter(user=request.user).first()
+        user_order1 = OrderTakeAway.objects.filter(user=request.user, expired=False).first()
+        user_order2 = OrderDelivery.objects.filter(user=request.user, expired=False).first()
         if user_order1:
-            user_order1.delete()
+            user_order1.expired = True
+            user_order1.save()
             user_basket.delete()
         elif user_order2:
-            user_order2.delete()
+            user_order2.expired = True
+            user_order2.save()
             user_basket.delete()
         return render(request, 'thanks.html')
     else:
         return render(request, 'sorry.html')
+
+
+@login_required(login_url='/signup/')
+def expand_quantity(request, element_pk):
+    user_basket = Basket.objects.filter(user=request.user).first()
+    element = FoodObject.objects.filter(id=element_pk).first()
+    basket_item = BasketItem.objects.filter(basket=user_basket, product=element).first()
+    if 1 <= basket_item.quantity < 100:
+        basket_item.quantity += 1
+        basket_item.save()
+        return redirect('basket')
+    else:
+        return redirect('basket')
+
+
+@login_required(login_url='/signup/')
+def reduce_quantity(request, element_pk):
+    user_basket = Basket.objects.filter(user=request.user).first()
+    element = FoodObject.objects.filter(id=element_pk).first()
+    basket_item = BasketItem.objects.filter(basket=user_basket, product=element).first()
+    if basket_item.quantity != 1:
+        basket_item.quantity -= 1
+        basket_item.save()
+        return redirect('basket')
+    else:
+        return redirect('basket')
 

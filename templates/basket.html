@@ -3,7 +3,7 @@
 {% block content %}
 {% load static %}
 
-{% if items %}
+{% if user_orders %}
     <div class="container">
         <div class="row">
             <div class="col-md-6 col-sm-12 order_item">
@@ -12,7 +12,7 @@
                     <p><br></p>
                     <p>Customer: {{user_basket.user}}</p>
                     <p>Positions in order: {{pos_count}}</p>
-                    <b>Total sum: {{total_price}} $</b>
+                    <b>Total sum: {{total_sum}}$</b>
                     <p><br></p>
                     <p><a href="{% url 'take_away' %}" class="btn btn-success">Take away</a>
                         <a href="{% url 'delivery' %}" class="btn btn-warning">Delivery</a>
@@ -22,20 +22,17 @@
 
             <div class="col-md-6 col-sm-12 order_item">
                 <h1>Your order</h1>
-                {% for item in items%}
+                {% for order in user_orders %}
                 <div class="column">
-                    <img src="{{item.image.url}}" alt="" style="width:50px; height:50px">
-                    <b>{{item.title}}</b>
-                    <p>Size: {{item.regular_size}} | Price: {{item.price}}$</p>
-<!--                    <div class="btn-group quantity" role="group" aria-label="Basic outlined example">-->
-<!--                        <button type="button" class="btn btn-primary">-->
-<!--                            <a href="">-</a>-->
-<!--                        </button>-->
-<!--                        <p class="btn btn-secondary quantity_p">1</p>-->
-<!--                        <button type="button" class="btn btn-primary">-->
-<!--                            <a href="">+</a>-->
-<!--                        </button>-->
-<!--                    </div>-->
+                    <img src="{{order.product.image.url}}" alt="" style="width:50px; height:50px">
+                    <b>{{order.product.title}}</b>
+                    <p>Size:  {{order.product.regular_size}} | Price: {{order.product.price}}$</p>
+                    <div class="btn-group quantity" role="group" aria-label="Basic outlined example">
+                        <a href="{% url 'reduce_quantity' element_pk=order.product.pk %}" class="btn btn-primary">-</a>
+                        <p class="btn btn-secondary quantity_p">{{order.quantity}}</p>
+                        <a href="{% url 'expand_quantity' element_pk=order.product.pk %}" class="btn btn-primary">+</a>
+                    </div>
+                    <p><br></p>
                 </div>
                 {% endfor %}
             </div>

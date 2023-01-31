@@ -30,9 +30,11 @@
                 <p>For orders over $20, shipping is free. Delivery costs {{delivery_price}}$.</p>
                 <hr>
                 {% for i in items %}
-                <p>{{i}}</p>
+                <p>{{i.product.title}}</p>
+                <p>Price {{i.product.price}}$ | Quantity: {{i.quantity}}</p>
+                <hr>
                 {% endfor %}
-                <b>Total sum: {{total_price}}$</b>
+                <b>Total sum: {{total_sum}}$</b>
             </div>
         </div>
     </div>

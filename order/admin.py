@@ -1,5 +1,5 @@
 from django.contrib import admin
-from order.models import Basket, Restaurant, OrderDelivery, OrderTakeAway
+from order.models import Basket, Restaurant, OrderDelivery, OrderTakeAway, BasketItem
 
 
 @admin.register(Restaurant)
@@ -10,7 +10,7 @@ class RestaurantAdmin(admin.ModelAdmin):
 
 @admin.register(Basket)
 class BasketAdmin(admin.ModelAdmin):
-    list_display = ['pk', 'user', ]
+    list_display = ['pk', 'user', 'created_date']
     list_filter = ('user', )
 
 
@@ -29,3 +29,9 @@ class OrderDeliveryAdmin(admin.ModelAdmin):
 class OrderTakeAwayAdmin(admin.ModelAdmin):
     list_display = ['user', 'restaurant', 'order_time', 'expired', 'status']
     list_filter = ('user', 'payment', 'expired', 'status')
+
+
+@admin.register(BasketItem)
+class BasketItemAdmin(admin.ModelAdmin):
+    list_display = ['basket', 'product', 'quantity']
+    list_filter = ('basket',)

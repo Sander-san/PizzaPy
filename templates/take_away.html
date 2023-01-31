@@ -30,9 +30,11 @@
                 <p>You will have to pick up your order at the restaurant</p>
                 <hr>
                 {% for i in items %}
-                <p>{{i}}</p>
+                <p>{{i.product.title}}</p>
+                <p>Price {{i.product.price}}$ | Quantity: {{i.quantity}}</p>
+                <hr>
                 {% endfor %}
-                <b>Total sum: {{total_price}}$</b>
+                <b>Total sum: {{total_sum}}$</b>
             </div>
         </div>
     </div>
